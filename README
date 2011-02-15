@@ -1,0 +1,3 @@
+This is a SilverStripe module that can read project information from AgileZen via their API.
+
+See docs/readme.md
