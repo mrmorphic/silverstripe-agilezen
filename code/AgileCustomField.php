@@ -3,13 +3,16 @@
 class AgileCustomField extends DataObject {
 	static $db = array(
 		// Name of property in the returned AgileZen object that we want to extract text from
-		"FieldName" => "Varchar",
+		"SourceFieldName" => "Varchar",
 		
 		// Heading title we're looking for
 		"HeadingTitle" => "Varchar",
 		
 		// The heading level of that level, so that sub-levels won't confuse us
-		"HeadingLevel" => "Int"
+		"HeadingLevel" => "Int",
+		
+		// The reference for your template
+		"TemplateFieldName" => "Varchar"
 	);
 
 	static $has_one = array(

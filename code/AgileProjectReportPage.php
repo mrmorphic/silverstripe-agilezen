@@ -28,9 +28,10 @@ class AgileProjectReportPage extends Page {
 				"Custom fields",
 				"AgileCustomField",
 				array(
-					"FieldName" => "Field Name",
+					"SourceFieldName" => "Story Card Field Name",
 					"HeadingTitle" => "Heading Title",
-					"HeadingLevel" => "Heading Level"
+					"HeadingLevel" => "Heading Level",
+					"TemplateFieldName" => "Story Card Name for Template"
 				)
 			)
 		);
@@ -70,28 +71,20 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 
 	// Returns a dataobjectset of stories for the project
 	function Stories() {
+		$customFieldsSrc = array();
+		$CustomFields = $this->CustomFields()->items;
+		foreach($CustomFields as $CustomField){
+			$customFieldsSrc[$CustomField->TemplateFieldName] = array(
+				"sourceField" => $CustomField->SourceFieldName,
+				"sourceHeadingTitle" => $CustomField->HeadingTitle,
+				"sourceHeadingLevel" => $CustomField->HeadingLevel
+			);
+		}
+		
 		return $this->getService()->getStories(
 			$this->DefaultProjectID,
 			null,
-			array(
-				"TechnicalSpecification" => array(
-					"sourceField" => "details",
-					"sourceHeadingTitle" => "Technical Specification",
-					"sourceHeadingLevel" => 3
-				),
-				"FeatureName" => array(
-					"sourceField" => "details",
-					"sourceHeadingTitle" => "Feature Name",
-					"sourceHeadingLevel" => 3,
-					"markdown" => false
-				),
-				"TechnicalAuthor" => array(
-					"sourceField" => "details",
-					"sourceHeadingTitle" => "Technical Author",
-					"sourceHeadingLevel" => 3,
-					"markdown" => false
-				)
-			)
+			$customFieldsSrc
 		);
 	}
 
