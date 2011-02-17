@@ -28,10 +28,11 @@ class AgileProjectReportPage extends Page {
 				"Custom fields",
 				"AgileCustomField",
 				array(
+					"TemplateFieldName" => "Story Card Name for Template",
 					"SourceFieldName" => "Story Card Field Name",
 					"HeadingTitle" => "Heading Title",
 					"HeadingLevel" => "Heading Level",
-					"TemplateFieldName" => "Story Card Name for Template"
+					"ApplyMarkdown" => "Apply Markdown to HTML translation on value"
 				)
 			)
 		);
@@ -77,7 +78,8 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 			$customFieldsSrc[$CustomField->TemplateFieldName] = array(
 				"sourceField" => $CustomField->SourceFieldName,
 				"sourceHeadingTitle" => $CustomField->HeadingTitle,
-				"sourceHeadingLevel" => $CustomField->HeadingLevel
+				"sourceHeadingLevel" => $CustomField->HeadingLevel,
+				"markdown" => $CustomField->ApplyMarkdown == "Yes"
 			);
 		}
 		
