@@ -72,8 +72,7 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 		$result = new DataObjectSet();
 
 		$tags = isset($_REQUEST['tags']) ? strtolower($_REQUEST['tags']) : "";
-		$tags = explode(",", $tags);
-
+		if ($tags) $tags = explode(",", $tags);
 		if ($tags) foreach ($tags as $tag) $result->push(new ArrayData(array("CriteriaType" => "tag", "Detail" => $tag)));
 
 		return $result;
@@ -100,7 +99,9 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 
 		// Get the tags we're filtering on, which is a comma separated list of values which we convert to an array
 		$tags = isset($_REQUEST['tags']) ? strtolower($_REQUEST['tags']) : "";
-		$tags = explode(",", $tags);
+		if ($tags) $tags = explode(",", $tags);
+		else $tags = null;
+
 		return $this->getService()->getStories(
 			$this->DefaultProjectID,
 			$tags,
