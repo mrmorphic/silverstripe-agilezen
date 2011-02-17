@@ -10,7 +10,8 @@
 
 class AgileProjectReportPage extends Page {
 	static $db = array(
-		"DefaultProjectID" => "Varchar"
+		"DefaultProjectID" => "Varchar",
+		"DefaultTags" => "Varchar"
 	);
 
 	static $has_many = array(
@@ -51,6 +52,7 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 			$this,
 			"SearchForm",
 			new FieldSet(
+				new TextField("tags", "tags (comma delimited)", $this->DefaultTags)
 			),
 			new FieldSet(
 				new FormAction("showreport", "Show Report")
@@ -65,6 +67,18 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 		return $this->renderWith($this->ClassName . "_report");
 	}
 
+	// Return a set of the criteria for presentation. At this this stage, just a list of the tags
+	function StoriesCriteria() {
+		$result = new DataObjectSet();
+
+		$tags = isset($_REQUEST['tags']) ? strtolower($_REQUEST['tags']) : "";
+		$tags = explode(",", $tags);
+
+		if ($tags) foreach ($tags as $tag) $result->push(new ArrayData(array("CriteriaType" => "tag", "Detail" => $tag)));
+
+		return $result;
+	}
+
 	// Returns a renderable object that contains properties of the project
 	function Project() {
 		return $this->getService()->getProject($this->DefaultProjectID);
@@ -72,6 +86,7 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 
 	// Returns a dataobjectset of stories for the project
 	function Stories() {
+		// Get custom fields from the page and assemble that into the structure that getStories needs.
 		$customFieldsSrc = array();
 		$CustomFields = $this->CustomFields()->items;
 		foreach($CustomFields as $CustomField){
@@ -82,10 +97,13 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 				"markdown" => $CustomField->ApplyMarkdown == "Yes"
 			);
 		}
-		
+
+		// Get the tags we're filtering on, which is a comma separated list of values which we convert to an array
+		$tags = isset($_REQUEST['tags']) ? strtolower($_REQUEST['tags']) : "";
+		$tags = explode(",", $tags);
 		return $this->getService()->getStories(
 			$this->DefaultProjectID,
-			null,
+			$tags,
 			$customFieldsSrc
 		);
 	}
