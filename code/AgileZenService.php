@@ -23,7 +23,7 @@ class AgileZenService extends RestfulService {
 	 * @param String $projectId		Id of the project to retrieve
 	 */
 	function getProject($projectId, $subFields = null) {
-		$r = $this->request('project/' . $projectId);
+		$r = $this->request('project/' . $projectId . "?with=everything");
 		if ($r->isError()) throw new Exception("Project: " . $r->getStatusDescription());
 
 		$proj = $r->xpath_one("/project");
