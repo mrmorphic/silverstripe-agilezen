@@ -28,16 +28,16 @@
 			</tfoot>
 			<tbody>
 				<% if Items %>
-				<% control Items %>
-					<% include AgileCustomFieldTableField_Item %>
-				<% end_control %>
+					<% control Items %>
+						<% include AgileCustomFieldTableField_Item %>
+					<% end_control %>
 				<% else %>
 				<tr class="notfound">
 					<% if Markable %><th width="18">&nbsp;</th><% end_if %>
 					<td colspan="$Headings.Count"><i><% _t('NOITEMSFOUND', 'No items found') %></i></td>
 					<% control Actions %><td width="18">&nbsp;</td><% end_control %>
 				</tr>
-			<% end_if %>
+				<% end_if %>
 			</tbody>
 		</table>
 		<div class="utility">
