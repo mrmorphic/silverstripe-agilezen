@@ -62,7 +62,7 @@ class AgileProjectReportPage_Controller extends Page_Controller {
 
 	// This is the target of the search form.
 	function showreport() {
-		return $this->renderWith("AgileProjectReportPage_report");
+		return $this->renderWith($this->ClassName . "_report");
 	}
 
 	// Returns a renderable object that contains properties of the project
