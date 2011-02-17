@@ -39,7 +39,10 @@ class AgileZenService extends RestfulService {
 	 *								asArrayData().
 	 */
 	function getStories($projectId, $tags = null, $subFields = null) {
-		$r = $this->request('project/' . $projectId . '/stories?with=everything');
+		$url = 'project/' . $projectId . '/stories?with=everything';
+		if ($tags && is_array($tags)) foreach ($tags as $tag) $url .= "&where=tag:" . trim($tag);
+		$r = $this->request($url);
+
 		if ($r->isError()) throw new Exception("Stories: " . $r->getStatusDescription());
 
 		$stories = $r->xpath("/stories/items/story");
