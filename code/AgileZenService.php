@@ -110,8 +110,8 @@ class AgileZenService extends RestfulService {
 		$source = html_entity_decode($source);
 
 		// Find the starting element in source.
-		$start = "<h{$def['sourceHeadingLevel']}>" . $def['sourceHeadingTitle'] . "</h{$def['sourceHeadingLevel']}>";
-		$i = strpos($source, $start);
+		$start = "<H{$def['sourceHeadingLevel']}>" . strtoupper($def['sourceHeadingTitle']) . "</H{$def['sourceHeadingLevel']}>";
+		$i = strpos(strtoupper($source), $start);
 		if ($i !== FALSE) $i += strlen($start);
 
 		if ($i === FALSE) return "";		// start not found
