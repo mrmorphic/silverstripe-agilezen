@@ -14,7 +14,6 @@
 				</tr>
 			</thead>
 			<tfoot>
-				<% end_if %>
 				<tr>
 					<% if Markable %><td width="18">&nbsp;</td><% end_if %>
 					<td colspan="$ItemCount">
