@@ -92,7 +92,9 @@ class AgileZenService extends RestfulService {
 			else $result[$key] = $value;
 		}
 
-// Debug::show("object without subfields is " . print_r($result, true));
+//Debug::show("object without subfields is " . print_r($result, true));
+//Debug::show("subfields def is " . print_r($subFields, true));
+
 		// Process subfields
 		if ($subFields) {
 			foreach ($subFields as $property => $fieldConf) {
